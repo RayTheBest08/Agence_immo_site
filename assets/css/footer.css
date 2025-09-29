@@ -1,0 +1,122 @@
+.site-footer {
+  background: #2c3e50;
+  color: #fff;
+  padding: 40px 0 0 0;
+  margin-top: 40px;
+  font-size: 1rem;
+}
+.site-footer .container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 16px;
+}
+.site-footer .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 0;
+  justify-content: space-between;
+}
+.site-footer .footer-item {
+  margin-bottom: 24px;
+}
+.site-footer .footer-item h4 {
+  color: #d4af37;
+  margin-bottom: 18px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+.site-footer .about .logo img {
+  width: 80px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+}
+.site-footer .about a {
+  color: #9eb998;
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+.site-footer .about ul {
+  margin-top: 10px;
+  padding: 0;
+  list-style: none;
+}
+.site-footer .about ul li {
+  display: inline-block;
+  margin-right: 8px;
+}
+.site-footer .about ul li a {
+  width: 32px;
+  height: 32px;
+  background: #9eb998;
+  color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  line-height: 32px;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+.site-footer .about ul li a:hover {
+  background: #d4af37;
+}
+.site-footer .services ul,
+.site-footer .announces ul {
+  padding: 0;
+  list-style: none;
+}
+.site-footer .services ul li,
+.site-footer .announces ul li {
+  margin-bottom: 8px;
+}
+.site-footer .services ul li a,
+.site-footer .announces ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.site-footer .services ul li a:hover,
+.site-footer .announces ul li a:hover {
+  color: #d4af37;
+}
+.site-footer .subscribe-newsletters input[type="text"] {
+  padding: 7px 10px;
+  border-radius: 4px;
+  border: none;
+  margin-right: 6px;
+  width: 70%;
+  max-width: 180px;
+}
+.site-footer .subscribe-newsletters button {
+  background: #d4af37;
+  color: #fff;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.site-footer .subscribe-newsletters button:hover {
+  background: #9eb998;
+}
+.site-footer .copyright {
+  text-align: center;
+  color: #bbb;
+  font-size: 0.95rem;
+  padding: 18px 0 8px 0;
+  border-top: 1px solid #ffffff;
+  margin-top: 24px;
+  width: 100%;
+  margin-left: 280px;
+    display: flex;
+  justify-content: center;
+}
+@media (max-width: 900px) {
+  .site-footer .row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .site-footer .footer-item {
+    margin-bottom: 32px;
+  }
+}
