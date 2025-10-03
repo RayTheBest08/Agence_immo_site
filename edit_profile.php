@@ -50,8 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 include 'templates/header.php';
-?>
-<div id="profileModal" class="modal-overlay">
+?><div id="profileModal" class="modal-overlay">
   <section class="modal-content">
     
     <h2>Modifier mon profil</h2>
@@ -81,153 +80,136 @@ include 'templates/header.php';
     
   </section>
 </div>
+<!-- <button onclick="openModal()">Modifier mon Profil</button> -->
+
 <?php include 'templates/footer.php'; ?>
 
-<style>/* ------------------------------------ */
-/* MODALE OVERLAY             */
-/* ------------------------------------ */
+<style>
 
 .modal-overlay {
-   
+    display: none; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-top:3rem;
+    background-color: rgba(0, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
 }
 
-/* ------------------------------------ */
-/* CONTENU DU MODALE          */
-/* ------------------------------------ */
+.modal-overlay.active {
+    display: flex; 
+}
+
 
 .modal-content {
-    background: #ffffff;
+    background-color: #fff;
     padding: 30px;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    /* Limite la largeur du modale */
-    max-width: 450px;
+    max-width: 500px;
     width: 90%;
-    position: relative; /* Nécessaire pour positionner le bouton de fermeture */
-    transform: translateY(-50px); /* Léger décalage pour l'animation */
-    opacity: 0;
-    transition: all 0.3s ease-out;
+    position: relative; 
+    
+    transform: translateY(-50px);
+    transition: transform 0.3s ease-out;
 }
 
-/* État Actif (affiché par JS) */
-.modal-overlay.is-open .modal-content {
+
+.modal-overlay.active .modal-content {
     transform: translateY(0);
-    opacity: 1;
-}
-.modal-overlay.is-open {
-    display: flex; /* Remplace 'none' par 'flex' lorsque visible */
 }
 
-/* ------------------------------------ */
-/* Éléments du Formulaire        */
-/* ------------------------------------ */
+
 
 .modal-content h2 {
     color: #333;
     margin-top: 0;
-    margin-bottom: 20px;
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.profile-form label {
+.modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+}
+
+.profile-form label,
+.profile-form input {
     display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .profile-form input[type="text"],
 .profile-form input[type="password"] {
-    width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    width: 100%;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* S'assure que padding n'augmente pas la largeur totale */
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .profile-form hr {
-    border: none;
-    border-top: 1px solid #eee;
     margin: 20px 0;
-}
-
-.profile-form h3 {
-    font-size: 1.1em;
-    color: #007bff;
-    margin-top: 0;
-    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #eee;
 }
 
 .btn-submit-profile {
+    display: block;
     width: 100%;
     padding: 12px;
+    margin-top: 20px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 1em;
+    border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.2s;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
 .btn-submit-profile:hover {
     background-color: #0056b3;
 }
-
-/* Bouton de fermeture (X) */
-.modal-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #aaa;
-    line-height: 1;
-}
-
-.modal-close-btn:hover {
-    color: #333;
-}</style>
-
+</style>
 <script>
-    // Ouvre le modale
-function openModal(event) {
-    if (event) {
-        event.preventDefault(); // Empêche le lien de sauter en haut de page
-    }
-    const modal = document.getElementById('profileModal');
-    // Ajoute la classe CSS pour afficher l'overlay et le contenu
-    modal.classList.add('is-open'); 
-}
-
-// Ferme le modale
-function closeModal() {
-    const modal = document.getElementById('profileModal');
-    // Retire la classe CSS pour masquer l'overlay et le contenu
-    modal.classList.remove('is-open');
-}
-
-// Optionnel: Fermer le modale si l'utilisateur clique en dehors
-document.addEventListener('DOMContentLoaded', () => {
+Document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('profileModal');
     
-    // Écouter les clics sur l'overlay (pas sur le contenu)
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
+    if (!modal) return;
+
+    window.closeModal = function() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; 
+    };
+
+    window.openModal = function(event) {
+        modal.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    };
+
+    modal.addEventListener('onclick', function(event) {
+        if (event.target === modal) {
+            window.closeModal();
         }
     });
-    
-    // Fermer avec la touche ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape" && modal.classList.contains('is-open')) {
-            closeModal();
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.classList.contains('active')) {
+            window.closeModal();
         }
     });
 });

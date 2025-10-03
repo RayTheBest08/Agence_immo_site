@@ -1,3 +1,4 @@
+
 // main.js
 document.addEventListener('DOMContentLoaded', function(){
   // example: simple client validation could be added here
@@ -26,23 +27,6 @@ function showSection(sectionId) {
         targetSection.classList.add("active");
     }
 
-    // 4. Activer le bouton cliqué (celui qui a appelé la fonction)
-    // Nous utilisons 'event.currentTarget' pour cibler le bouton
-    // qui a déclenché l'événement 'onclick'.
-    // NOTE: Si vous utilisez l'attribut 'onclick' comme dans l'exemple HTML,
-    // vous devez modifier la fonction pour accepter l'événement 'e' :
-    /*
-    // Si vous changez le onclick en : onclick="showSection('usersSection', event)"
-    function showSection(sectionId, event) {
-        ...
-        event.currentTarget.classList.add("active");
-    }
-    */
-    
-    // Simplifié : Puisque la fonction est appelée via onclick, 
-    // l'élément cliqué est 'this' (le bouton). Nous allons juste ajouter la classe 'active'
-    // à tous les boutons qui correspondent à la section que nous venons d'afficher.
-    // Une façon plus simple est de cibler directement le bouton correspondant à la section affichée :
     const buttonId = "tab" + sectionId.replace('Section', '');
     const activeButton = document.getElementById(buttonId);
     if (activeButton) {

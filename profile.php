@@ -8,130 +8,145 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 include 'templates/header.php';
 ?>
-<div id="profileModal" class="modal-overlay">
-  <section class="modal-content">
+
+
+<main id="profileSidebar" class="profile-container">
     
-    <h2>Modifier mon profil</h2>
-    <button class="modal-close-btn" onclick="closeModal()">X</button>
-    <p><a href="edit_profile.php" onclick="openModal(event)">Modifier mon profil</a></p>
-<p><a href="#" onclick="openModal(event)">Modifier mon profil</a></p>
+    <button id="closeSidebarBtn" class="close-btn">&#10006;</button> 
+
+    <h1>Mon Profil</h1>
     
-    <form method="post" class="profile-form">
-      <label for="nom">Nom</label>
-      <input id="nom" name="nom" value="<?php echo esc($user['nom']); ?>" required>
-      
-      <button type="submit" class="btn-submit-profile">Enregistrer</button>
-    </form>
-    
-  </section>
-</div>
+    <div class="profile-info">
+        <p>
+            <strong class="info-label">Nom :</strong> 
+            <span class="info-value"><?php echo esc($user['nom']); ?></span>
+        </p>
+        <p>
+            <strong class="info-label">Email :</strong> 
+            <span class="info-value"><?php echo esc($user['email']); ?></span>
+        </p>
+        <p>
+            <strong class="info-label">Téléphone :</strong> 
+            <span class="info-value"><?php echo esc($user['telephone']); ?></span>
+        </p>
+    </div>
+
+    <a href="edit_profile.php" class="btn-primary">Modifier mes informations</a>
+</main>
+
+
 <?php include 'templates/footer.php'; ?>
 
-<style>
-/* Cache la fenêtre par défaut, couvre l'écran, et la positionne à droite */
-.modal-overlay {
-    display: none; 
-    position: fixed;
+<style> 
+/* 
+.profile-container {
+    position: fixed; 
+    height: 100%;       
+    width: 350px;      
+    z-index: 1000;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); 
-    z-index: 1000; 
-    /* Positionne le contenu à droite */
-    display: flex;
-    justify-content: flex-end;
-}
-
-/* Le Panneau qui glisse */
-.modal-content {
-    background: #ffffff;
-    height: 100%; /* Pleine hauteur */
-    width: 400px; /* Largeur du panneau */
-    max-width: 90%; 
+    right: 0;      
+    transform: translateX(351px);     
+    background-color: #ffffff; 
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
     padding: 30px;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-    position: relative; 
-    
-    /* Déplace le panneau complètement à droite (hors écran) */
-    transform: translateX(100%); 
-    transition: transform 0.4s ease-out; /* Ajoute l'animation */
+    transition: transform 0.4s ease-in-out; 
 }
 
-/* État Actif (Affiché) */
-.modal-overlay.is-open {
-    display: flex; /* Révèle l'arrière-plan */
+.profile-container.sidebar-active {
+    transform: translateX(0);
 }
 
-.modal-overlay.is-open .modal-content {
-    /* Ramène le panneau à sa position d'origine (glisse vers la gauche) */
-    transform: translateX(0); 
-}
 
-/* Style du bouton de fermeture (X) */
-.modal-close-btn {
-    position: absolute;
+.close-btn {
+    position: absolute; 
     top: 10px;
     right: 15px;
+    font-size: 30px;
+    color: #6c757d;
     background: none;
     border: none;
-    font-size: 24px;
     cursor: pointer;
-    color: #aaa;
+    line-height: 1; 
+    padding: 5px;
+    transition: color 0.2s;
 }
 
-/* Styles du formulaire (ajoutez le reste de vos styles d'input/label ici) */
-.profile-form label { display: block; margin-top: 10px; font-weight: bold; }
-.profile-form input { width: 100%; padding: 10px; margin-bottom: 15px; box-sizing: border-box; }
-/* ... */
-    
+.close-btn:hover {
+    color: #333;
+}
 
+.profile-container h1 {
+    font-size: 1.5em;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+.profile-info p {
+    display: flex;
+    margin-bottom: 12px;
+}
 
+.info-label {
+    font-weight: bold;
+    color: #555;
+    min-width: 90px;
+}
+
+.btn-primary {
+    display: block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 30px;
+} */
 </style>
 
 <script>
-    function openModal(event) {
-    // 1. Annule l'action par défaut du lien. C'est l'étape CRUCIALE.
-    if (event) {
-        event.preventDefault(); 
-    }
-
-    // 2. Trouve et affiche le modale
-    const modal = document.getElementById('profileModal');
-    if (modal) {
-        modal.classList.add('is-open'); 
-    }
-}
-// Ouvre le modale et ajoute la classe 'is-open'
-function openModal(event) {
-    if (event) {
-        event.preventDefault(); // Empêche la navigation vers 'edit_profile.php'
-    }
-    const modal = document.getElementById('profileModal');
-    modal.classList.add('is-open'); 
-}
-
-// Ferme le modale et retire la classe 'is-open'
-function closeModal() {
-    const modal = document.getElementById('profileModal');
-    modal.classList.remove('is-open');
-}
-
-// Écouteurs d'événements pour l'amélioration UX
-document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('profileModal');
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('profileSidebar'); 
+    const closeBtn = document.getElementById('closeSidebarBtn'); 
     
-    // Fermer en cliquant sur l'overlay (le fond noir)
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    // IMPORTANT : On suppose que ce bouton existe ailleurs pour ouvrir la sidebar.
+    const openBtn = document.getElementById('openSidebarBtn'); 
+
+    if (!sidebar) return; 
+
+    // Fonction centrale pour basculer (ouvrir/fermer)
+    function toggleSidebar() {
+        sidebar.classList.toggle('sidebar-active');
+    }
     
-    // Fermer avec la touche ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape" && modal.classList.contains('is-open')) {
-            closeModal();
+    // 1. Écouteur pour la croix de fermeture (simplement bascule, si elle est active, elle se ferme)
+    if (closeBtn) {
+        closeBtn.addEventListener('click', toggleSidebar);
+    }
+    
+    // 2. Écouteur pour le bouton d'ouverture (si vous en avez un)
+    if (openBtn) {
+        openBtn.addEventListener('click', function(event) {
+            // ***SOLUTION DU PROBLÈME DE FERMETURE IMMÉDIATE***
+            // Arrête la propagation de l'événement de clic du bouton d'ouverture.
+            // Cela empêche le document.addEventListener('click', ...) de détecter
+            // le même clic et de fermer la sidebar juste après son ouverture.
+            event.stopPropagation(); 
+            toggleSidebar();
+        });
+    }
+
+    // 3. Écouteur pour fermer en cliquant en dehors de la sidebar
+    document.addEventListener('click', function(event) {
+        const isActive = sidebar.classList.contains('sidebar-active');
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        
+        // Ferme si elle est active et que le clic est en dehors (et n'est pas sur un autre élément géré par stopPropagation, comme openBtn)
+        if (isActive && !isClickInsideSidebar) {
+            sidebar.classList.remove('sidebar-active');
         }
     });
 });

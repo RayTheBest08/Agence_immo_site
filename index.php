@@ -1,4 +1,5 @@
 <?php
+
 require 'config.php';
 require 'functions.php';
 include 'templates/header.php';
@@ -9,7 +10,6 @@ $stmt = $pdo->query("SELECT a.*, c.nom AS category FROM annonces a JOIN categori
 $annonces = $stmt->fetchAll();
 ?>
 
-<h1>Bienvenue sur l'agence</h1>
 <p>Recherche rapide:</p>
 <form action="listings.php" method="post" class="search-form">
   <select name="category">
